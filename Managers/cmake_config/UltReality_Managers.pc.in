@@ -1,0 +1,10 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+libdir=@LIBDIR_FOR_PKG_CONFIG@
+includedir=@INCLUDEDIR_FOR_PKG_CONFIG@
+
+Name: @PROJECT_NAME@
+Description: Sub-system managers for the Ultimate Reality Engine (singleton objects initialized by the core to load the engine sub-systems)
+URL: https://github.com/Ultimate-Reality-Game-Engine/UltReality_Core
+Version: @PROJECT_VERSION@
+Cflags: -I${includedir}
+Libs: -lUltReality_Managers
