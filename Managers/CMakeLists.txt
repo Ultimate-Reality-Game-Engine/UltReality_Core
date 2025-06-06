@@ -7,6 +7,34 @@ option(ULTREALITY_MANAGERS_VERBOSE "Enable verbose messages for UtilitiesStatic"
 
 message(STATUS "ULTREALITY_MANAGERS_VERBOSE: ${ULTREALITY_MANAGERS_VERBOSE}")
 
+# Fetch Content ***********************************************************************************
+#**************************************************************************************************
+
+include(FetchContent)
+
+if (NOT TARGET RendererInterface)
+	# Fetch the RendererInterface library
+	FetchContent_Declare(
+		RenderingCore 
+		GIT_REPOSITORY https://github.com/Ultimate-Reality-Game-Engine/Rendering_Core.git 
+		GIT_TAG master
+	)
+	FetchContent_MakeAvailable(RenderingCore)
+endif()
+
+if(NOT TARGET Utilities)
+	# Fetch the Utilities library
+	FetchContent_Declare(
+		Utilities 
+		GIT_REPOSITORY https://github.com/Ultimate-Reality-Game-Engine/Utilities.git
+		GIT_TAG master
+	)
+	FetchContent_MakeAvailable(Utilties)
+endif()
+
+# End Fetch Content *******************************************************************************
+#**************************************************************************************************
+
 # Target Creation *********************************************************************************
 #**************************************************************************************************
 
@@ -51,7 +79,7 @@ if(ULTREALITY_MANAGERS_BUILD)
 		endforeach()
 
 		# Link libraries to the target
-		target_link_libraries(UltReality_Managers RendererInterface)
+		target_link_libraries(UltReality_Managers PUBLIC RendererInterface UtilitiesStatic)
 
 		set_target_properties(UltReality_Managers PROPERTIES 
 			VERSION ${PROJECT_VERSION} 
@@ -66,7 +94,7 @@ if(ULTREALITY_MANAGERS_BUILD)
 
 		# Install the targets
 		install(
-			TARGETS UltReality_Managers RendererInterface
+			TARGETS UltReality_Managers 
 			EXPORT UltReality_Managers_Targets 
 			ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR} # Static libraries/import libraries (.lib files for .dll linking) 
 			LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} # Shared libraries (.so) 
